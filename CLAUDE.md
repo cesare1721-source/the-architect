@@ -28,16 +28,17 @@ Read the matching archetype file from `knowledge/archetypes/` before proceeding 
 Read `questions/phase-2-branches.md` — use the section matching the identified archetype. Ask 3-5 targeted questions. Read relevant `knowledge/building-blocks/*.md` files as needed for specific decisions (auth, database, deployment, etc.).
 
 **Skill integration during this phase:**
-- Use `/deep-research` when comparing unfamiliar technologies or when the user asks about something you need current data on
-- Use `/find-skills` once to discover skills that would help during the BUILD phase (not design phase)
+- Use `WebSearch`/`WebFetch` when comparing unfamiliar technologies or when the user asks about something you need current data on
+- Use `SearchSkills`/`SuggestSkills` once to discover skills that would help during the BUILD phase (not design phase)
 
 ### Phase 3: ARCHITECTURE
 
 Read `questions/phase-3-confirmation.md`. Present the proposed tech stack and architecture with clear rationale for each decision. Be opinionated — recommend what you believe is best, explain why.
 
 **Skill integration during this phase:**
-- Use `/ui-ux-pro-max` to design the visual system (colors, typography, spacing, component style) for any project with a frontend
-- If the user mentions a reference site, use `/chrome-bridge-automation` or `/playwright-cli` to screenshot and analyze it
+- Use `ui-ux-pro-max` to design the visual system (colors, typography, spacing, component style) for any project with a frontend
+- Use `impeccable` to sanity-check the proposed UI/UX direction before presenting it
+- No browser-automation skill is currently installed, so if the user mentions a reference site, work from the URL/description they give (or ask them to share a screenshot) instead of screenshotting it yourself
 
 Ask for confirmation or adjustments before generating.
 
@@ -54,16 +55,24 @@ Ask for confirmation or adjustments before generating.
 
 ## Skill Integration Reference
 
+Only skills actually installed in this environment are listed below. See `knowledge/skills-registry.md` for the full build-phase mapping.
+
 | Skill | When to Use |
 |-------|-------------|
-| `/deep-research` | Comparing technologies, researching best practices, unfamiliar tools |
-| `/ui-ux-pro-max` | Designing visual system for frontend projects |
-| `/find-skills` | Discovering skills to recommend for the build phase |
-| `/frontend-design` | Do NOT use during design — recommend it in the blueprint for the builder |
-| `/shadcn-ui` | Do NOT use during design — recommend it in the blueprint if shadcn is chosen |
-| `/seo-audit` | Reference in blueprint for marketing sites and content platforms |
-| `/playwright-cli` | Analyzing reference sites the user shares |
-| `/chrome-bridge-automation` | Alternative for analyzing reference sites (uses user's Chrome with sessions) |
+| `WebSearch` / `WebFetch` | Comparing technologies, researching best practices, unfamiliar tools |
+| `ui-ux-pro-max` | Designing visual system for frontend projects |
+| `impeccable` | Sanity-checking UI/UX direction during design; recommend in blueprint for the builder |
+| `SearchSkills` / `SuggestSkills` | Discovering skills to recommend for the build phase |
+| `emil-design-eng` | Do NOT use during design — recommend it in the blueprint when UI polish/animation matters |
+| `dataviz` | Do NOT use during design — recommend it in the blueprint when the project has charts/dashboards |
+| `canvas-design` | Do NOT use during design — recommend it in the blueprint for marketing/landing static art |
+| `content-strategy` | Do NOT use during design — recommend it in the blueprint for content platforms and marketing sites |
+| `ads` | Do NOT use during design — recommend it in the blueprint if paid acquisition is in scope |
+| `docx` / `pptx` / `xlsx` / `pdf` | Do NOT use during design — recommend in the blueprint if the project generates those file types |
+| `run` | Do NOT use during design — recommend it in the blueprint as the final build-verification step |
+| `security-review` | Do NOT use during design — recommend it in the blueprint for projects handling auth/payments/user data |
+| `review` | Do NOT use during design — recommend it in the blueprint when the build phase opens a PR |
+| `claude-api` | Do NOT use during design — recommend it in the blueprint if the project integrates the Claude API |
 
 ---
 
