@@ -1,0 +1,39 @@
+{
+  "nombre": "CONDOMINIO RESIDENCIAS ALMAQUI",
+  "rif": "J-30939078-3",
+  "direccion": "Av. Bermudez, Urb. El Centro, Maracay",
+  "correo": "condominio.resdalmaqui@gmail.com",
+  "celulares": ["0414-4545925", "0424-3330669"],
+  "cuenta_pago": "Cuenta de Ahorro Nro 0105-0118-190118-18943-3",
+  "nota_divisas": "Segun lo acordado por Junta de Condominio los Recibos son reflejados en Divisas y pueden ser cancelados en Bolivares a la tasa del BCV o en $.",
+  "moneda_recibos": "USD",
+  "moneda_estado_cuentas": ["Bs", "USD"],
+  "unidades": [
+    {"codigo": "00M",    "descripcion": "Maletero",        "propietario": "INVERSIONES T. Y CA (Sr Edgar / Yenny, Apto 1-4)", "alicuota": 0.66,  "cuotas_planas": false, "contacto": "0412-4623071", "correo": "syenny9@gmail.com"},
+    {"codigo": "02PE",   "descripcion": "Puesto Estac.",   "propietario": "INVERSIONES T. Y CA (Sr Edgar / Yenny, Apto 1-4)", "alicuota": 0.66,  "cuotas_planas": false, "contacto": "0412-4623071", "correo": "syenny9@gmail.com"},
+    {"codigo": "PH-1",   "descripcion": "Penthouse 1",     "propietario": "DINORA VIRGINIA DAZA LUGO (Frank Daza)",         "alicuota": 10.57, "cuotas_planas": true,  "contacto": "0412-67018638", "correo": "paisa_fd@hotmail.com"},
+    {"codigo": "PH-2",   "descripcion": "Penthouse 2",     "propietario": "MARIA IRENE FERNANDES",                         "alicuota": 8.68,  "cuotas_planas": true,  "contacto": "0424-3237040", "correo": "fernandesirene876@gmail.com"},
+    {"codigo": "LC-1",   "descripcion": "Local 1",         "propietario": "CARMEN LINDA EVANS",                            "alicuota": 5.51,  "cuotas_planas": true,  "contacto": "0412-8465487", "correo": "carmen_evans_4057@hotmail.com"},
+    {"codigo": "LC-2",   "descripcion": "Local 2",         "propietario": "SERVISAROMI CA",                                "alicuota": 7.74,  "cuotas_planas": true,  "contacto": "", "correo": "servisaromi@gmail.com"},
+    {"codigo": "LC-3",   "descripcion": "Local 3",         "propietario": "ANGEL EDUARDO LUNA HEREDIA",                    "alicuota": 7.74,  "cuotas_planas": true,  "contacto": "0243-2359645", "correo": "rrhhnarove@gmail.com"},
+    {"codigo": "1-1",    "descripcion": "Apto 1-1",        "propietario": "OSCAR ESPINOZA",                                "alicuota": 5.95,  "cuotas_planas": true,  "contacto": "0424-3641630", "correo": "oscare7272920@gmail.com"},
+    {"codigo": "1-2",    "descripcion": "Apto 1-2",        "propietario": "MENFI SANDOVAL",                                "alicuota": 5.29,  "cuotas_planas": true,  "contacto": "0412-4679225", "correo": "menfioliermina@gmail.com"},
+    {"codigo": "1-3",    "descripcion": "Apto 1-3",        "propietario": "RAFAEL EDUARDO GONZALEZ GONZALEZ",              "alicuota": 3.83,  "cuotas_planas": true,  "contacto": "0416-6438798 / 0424-3412291", "correo": "8038ra@gmail.com"},
+    {"codigo": "1-4",    "descripcion": "Apto 1-4",        "propietario": "INVERSIONES T Y CA (Sr Edgar / Yenny)",          "alicuota": 4.85,  "cuotas_planas": true,  "contacto": "0412-4623071", "correo": "syenny9@gmail.com"},
+    {"codigo": "2-1",    "descripcion": "Apto 2-1",        "propietario": "JOSE A. VIRGUEZ (Maritza Guerrero)",            "alicuota": 5.29,  "cuotas_planas": true,  "contacto": "0414-3599269", "correo": "elisabethguerrero020@gmail.com"},
+    {"codigo": "2-2",    "descripcion": "Apto 2-2",        "propietario": "MARIA ISABEL CAPOTE (Elimar de Martinez)",      "alicuota": 5.29,  "cuotas_planas": true,  "contacto": "0424-3497015", "correo": "elimargiron1967@gmail.com"},
+    {"codigo": "2-3",    "descripcion": "Apto 2-3",        "propietario": "LOURDES TIBISAY LOPEZ SEIJAS",                  "alicuota": 3.83,  "cuotas_planas": true,  "contacto": "0424-3698189", "correo": ""},
+    {"codigo": "2-4",    "descripcion": "Apto 2-4",        "propietario": "CLOPEDISTERIS GUEDEZ",                          "alicuota": 4.85,  "cuotas_planas": true,  "contacto": "0243-2362616 / 0414-3117709", "correo": "kleincleo45@gmail.com"},
+    {"codigo": "3-1",    "descripcion": "Apto 3-1",        "propietario": "MERBIS ELIAS GIMON CENTENO (Sr. Pedro)",        "alicuota": 5.29,  "cuotas_planas": true,  "contacto": "0424-3740976 / 0416-4432304", "correo": "beatrizcenteno@hotmail.com"},
+    {"codigo": "3-2",    "descripcion": "Apto 3-2",        "propietario": "LAWRENCE KARLO CALDERON (Francisco Vega)",      "alicuota": 5.29,  "cuotas_planas": true,  "contacto": "0414-4495645", "correo": "tnivenezuela@gmail.com"},
+    {"codigo": "3-3",    "descripcion": "Apto 3-3",        "propietario": "ELVIA PARTIDAS",                                "alicuota": 3.83,  "cuotas_planas": true,  "contacto": "0414-4518784", "correo": "elviparti@hotmail.com"},
+    {"codigo": "3-4",    "descripcion": "Apto 3-4",        "propietario": "MIRIAN VELASQUEZ MANSINI",                      "alicuota": 4.853, "cuotas_planas": true,  "contacto": "", "correo": "marialemv@live.com"}
+  ],
+  "notas": {
+    "unidades_totales": 19,
+    "unidades_con_cuotas_planas": 17,
+    "unidades_solo_alicuota": ["00M", "02PE"],
+    "suma_alicuotas_pct": 100.003,
+    "cuotas_planas_aplican_a": "17 unidades (2 PH + 3 locales + 12 apartamentos). Los codigos 00M y 02PE (maletero y puesto de estacionamiento) solo pagan por alicuota, sin cuotas planas ($) ni cuota extra."
+  }
+}
