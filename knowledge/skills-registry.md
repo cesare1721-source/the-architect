@@ -2,31 +2,37 @@
 
 Maps available Claude Code skills to blueprint sections. Use this during Phase 4 (Generate) to recommend the right skills for the build phase.
 
+This registry only lists skills actually installed in this environment — do not recommend a skill that isn't installed.
+
 ## Skills for Blueprint Recommendations
 
 | Skill | Blueprint Section | When to Recommend | What It Does |
 |-------|------------------|-------------------|-------------|
-| `/frontend-design` | Frontend Architecture, Build Order | Any project with a UI | Creates distinctive, production-grade frontend interfaces |
-| `/shadcn-ui` | Tech Stack, Build Order | When shadcn/ui is chosen as component library | Search and implement shadcn components |
-| `/ui-ux-pro-max` | Design System | Any project with a UI | 50+ styles, 161 palettes, 57 font pairings, UX guidelines |
-| `/seo-audit` | Deployment Strategy, Build Order | Marketing sites, content platforms, any public-facing site | Full technical SEO audit |
-| `/deep-research` | Tech Stack (during design) | When comparing technologies or unfamiliar tools | Systematic multi-angle web research |
-| `/find-skills` | Skills to Use (during design) | Always run once to discover build-phase skills | Discovers installable skills |
-| `/humanizer` | Build Order (content step) | When project includes marketing copy or content writing | Removes AI-generated writing patterns |
-| `/pdf-design` | Build Order | When project generates PDFs (reports, invoices, docs) | Professional PDF creation |
-| `/playwright-cli` | Testing Strategy, Build Order | When E2E testing is in scope | Browser automation and testing |
-| `/web-reader` | Build Order | When project needs web scraping or content extraction | Web page content extraction |
-| `/chrome-bridge-automation` | Build Order | When project automates browser workflows | Vision-driven browser automation |
+| `impeccable` | Frontend Architecture, Build Order | Any project with a UI | Designs/redesigns/audits frontend interfaces — hierarchy, layout, motion, accessibility, design systems |
+| `ui-ux-pro-max` | Design System | Any project with a UI | 67 styles, 96 palettes, 57 font pairings, 13 stacks (incl. shadcn/ui via MCP) |
+| `emil-design-eng` | Frontend Architecture, Build Order | Projects where UI polish/micro-interactions matter | Emil Kowalski's philosophy on UI polish and animation decisions |
+| `dataviz` | Build Order | Any project with charts, dashboards, or analytics views | Design-system-agnostic method for charts, stat tiles, dashboards |
+| `canvas-design` | Build Order | Marketing sites, landing pages needing static art/posters | Original visual art in .png/.pdf |
+| `content-strategy` | Build Order (content step) | Content platforms, blogs, marketing sites | Editorial calendar, content pillars, topic clusters |
+| `ads` | Deployment Strategy, Build Order | Marketing sites needing a paid-acquisition plan | Paid campaign strategy across ad platforms |
+| `docx` / `pptx` / `xlsx` / `pdf` | Build Order | When the project generates Word docs, decks, spreadsheets, or PDFs | Create/edit/read the respective file format |
+| `run` | Build Order (final step) | Always, once the app is scaffolded | Launches and screenshots the app to confirm it works end-to-end |
+| `security-review` | Build Order (final step) | Any project handling auth, payments, or user data | Security review of the pending changes before ship |
+| `review` | Build Order (final step) | When the build phase opens a PR | Reviews a GitHub pull request |
+| `claude-api` | Tech Stack | When the project integrates the Claude API/Anthropic SDK | Model ids, pricing, streaming, tool use, caching reference |
 
 ## Skills The Architect Uses During Design
 
 | Skill | Phase | Purpose |
 |-------|-------|---------|
-| `/deep-research` | Phase 2 | Compare technologies, research patterns |
-| `/ui-ux-pro-max` | Phase 3 | Design the visual system (colors, fonts, style) |
-| `/find-skills` | Phase 2 | Discover skills to recommend in the blueprint |
-| `/playwright-cli` | Phase 3 | Screenshot reference sites the user mentions |
-| `/chrome-bridge-automation` | Phase 3 | Alternative for reference site analysis (uses user's Chrome with sessions) |
+| `ui-ux-pro-max` | Phase 3 | Design the visual system (colors, fonts, style) |
+| `impeccable` | Phase 3 | Sanity-check the proposed UI/UX direction before confirmation |
+
+Notes:
+- For technology comparisons and unfamiliar-tools research (formerly `/deep-research`), use the `WebSearch`/`WebFetch` tools directly — no dedicated research skill is installed.
+- For discovering build-phase skills (formerly `/find-skills`), use the `SearchSkills`/`SuggestSkills` tools directly instead of a skill.
+- No browser-automation or reference-site-screenshot skill is currently installed (previously `/playwright-cli`, `/chrome-bridge-automation`, `/web-reader`). If the user shares a reference site, describe it from the URL/description they give, or ask them to share a screenshot.
+- No SEO-audit or humanizer skill is currently installed. Omit those blueprint recommendations until one is available.
 
 ## How to Include in Blueprint
 
