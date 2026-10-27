@@ -14,3 +14,6 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Descargas comprimidas (el contenido ya está versionado en su carpeta)
+output/*.zip

@@ -1,0 +1,36 @@
+HOOPZ · Imágenes del catálogo
+==============================
+
+1-recortes-sin-fondo/   32 PNG con fondo transparente (1280 × 1600, formato 4:5).
+                        Son las que usa el catálogo hoy. Las mejores para editar.
+2-fotos-originales/     Las 32 fotos originales, ya giradas al derecho (con la sábana de fondo).
+3-logo/                 Logo completo, emblema (pelota + alas + HOOPZ) y solo la palabra HOOPZ.
+
+Cada producto tiene "-frente" y, si existe, "-espalda".
+Ejemplo: lakers-bryant-24-frente.png / lakers-bryant-24-espalda.png
+(Celtics Tatum solo tiene espalda; las 5 prendas de entrenamiento solo frente.)
+
+
+CÓMO DEVOLVERLAS PARA EL CATÁLOGO
+----------------------------------
+1. Conserva EXACTAMENTE el mismo nombre de archivo.
+2. Formato vertical 4:5 (por ejemplo 1280 × 1600) y la prenda completa, centrada.
+3. Fondo transparente (PNG) o un fondo liso de un solo color: si viene con fondo,
+   lo recorto de nuevo automáticamente.
+4. Prenda derecha, con el cuello arriba.
+5. Si mejoras unas sí y otras no, manda solo las que cambiaron.
+
+
+OJO AL MEJORAR CON IA
+---------------------
+El cliente compra la prenda real, así que la foto tiene que ser fiel:
+- Pide mejorar luz, nitidez y arrugas, SIN cambiar la prenda.
+- Revisa cada resultado contra la prenda real: letras, números, nombres,
+  parches, logos, costuras y colores. La IA a veces inventa o deforma texto
+  (por ejemplo "LAKERS", "BUTLER", "District of Columbia").
+- No agregues modelos, maniquíes ni elementos que no vengan con la prenda.
+
+Ejemplo de instrucción:
+"Mejora esta foto de producto: iluminación de estudio pareja, quita las arrugas
+y los reflejos de luz, más nitidez. No cambies colores, letras, números, logos
+ni la forma de la camiseta. Fondo transparente, formato vertical 4:5."
