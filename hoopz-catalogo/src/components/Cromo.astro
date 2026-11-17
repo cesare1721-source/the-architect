@@ -86,7 +86,7 @@ const pic: { formats: ("avif" | "webp")[]; fallbackFormat: "webp"; widths: numbe
         </div>
       </div>
     </div>
-    <button type="button" data-flip class="press mt-4 inline-flex h-11 items-center gap-2 rounded-full border border-line px-4 text-sm font-semibold">
+    <button type="button" data-flip data-back-label={hasBack ? "Ver espalda" : "Ver ficha"} class="press mt-4 inline-flex h-11 items-center gap-2 rounded-full border border-line px-4 text-sm font-semibold">
       <Icon name="RefreshCw" size={16} />
       <span data-flip-label>{hasBack ? "Ver espalda" : "Ver ficha"}</span>
     </button>
