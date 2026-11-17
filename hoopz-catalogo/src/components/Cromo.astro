@@ -1,0 +1,216 @@
+---
+import { Picture, Image } from "astro:assets";
+import type { Product } from "@/data/schema";
+import Icon from "./icons/Icon.astro";
+import WhatsAppIcon from "./icons/WhatsAppIcon.astro";
+import wordmark from "@/assets/brand/hoopz-wordmark.png";
+import { getStore } from "@/lib/catalog";
+import { productImage } from "@/lib/images";
+import { cardImage, imageAlt, isJersey, priceText, stageImage, teamShort } from "@/lib/labels";
+import { generalWhatsAppUrl, productLabel, productWhatsAppUrl } from "@/lib/whatsapp";
+import { waAttrs } from "@/lib/wa-attrs";
+
+interface Props {
+  product: Product;
+  mode: "sheet" | "page";
+}
+const { product: p, mode } = Astro.props;
+const store = getStore();
+const price = priceText(p);
+const Heading = mode === "page" ? "h1" : "h2";
+const id = `c-${p.slug}`;
+const big = p.number ?? p.plate.split(" ")[0]!;
+const bigLen = Math.max(2, big.length);
+const hasBack = Boolean(p.images.back && p.images.front);
+const stats: [string, string][] = [
+  ["Equipo", p.team ?? "HOOPZ Training"],
+  ...(isJersey(p) ? ([["Jugador", `${p.title}${p.number !== null ? ` #${p.number}` : ""}`]] as [string, string][]) : []),
+  ...(p.season ? ([["Temporada", p.season]] as [string, string][]) : []),
+  ["Edición", p.variant],
+  ["Tallas", p.sizes.length ? p.sizes.join(" · ") : "Pregunta por WhatsApp"],
+  ["Precio", price ?? "Por WhatsApp"],
+];
+const pic: { formats: ("avif" | "webp")[]; fallbackFormat: "webp"; widths: number[]; sizes: string } = {
+  formats: ["avif", "webp"],
+  fallbackFormat: "webp",
+  widths: [480, 720, 960],
+  sizes: "(min-width: 768px) 360px, 80vw",
+};
+---
+
+<article data-detail data-slug={p.slug} data-label={productLabel(p)} class="md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-center md:gap-8" style={`--accent:${p.accent}`}>
+  <!-- El cromo -->
+  <div class="grid place-items-center px-6 pt-4 pb-2 md:p-8">
+    <div data-tilt class="cromo-tilt w-[min(76vw,340px)]">
+      <div data-flipper data-side="front" class="cromo relative aspect-5/7">
+        <!-- Frente -->
+        <div class="face face-front">
+          <div class="cromo-frame">
+            <div class="cromo-panel relative h-full overflow-hidden rounded-[14px]">
+              <span class="outline-text cromo-num" style={`--len:${bigLen}`} aria-hidden="true">{big}</span>
+              <Picture src={productImage(cardImage(p))} alt={imageAlt(p, p.images.front ? "front" : "back")} {...pic} class="garment absolute inset-x-[6%] top-[13%] h-[66%] w-[88%] object-contain" loading="eager" />
+              <p class="broadcast absolute top-3 left-3 text-ink/90">{teamShort(p) ?? "Training"}</p>
+              {p.category === "retro" && <p class="broadcast absolute top-3 right-3 rounded-full bg-gold px-2 py-0.5 text-[10px] text-bg">Leyenda</p>}
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent px-3 pt-8 pb-3">
+                <p class="font-display text-[26px] leading-none font-black uppercase">{p.title}</p>
+                <div class="mt-1.5 flex items-center justify-between">
+                  <p class="broadcast text-(--accent)">{p.number !== null ? `#${p.number}` : p.variant.split(" · ")[0]}{p.season ? ` · ${p.season}` : ""}</p>
+                  <Image src={wordmark} alt="" width={120} class="logo-fade h-4 w-auto opacity-80" />
+                </div>
+              </div>
+              <div data-foil class="foil" aria-hidden="true"></div>
+              <div data-glare class="glare" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Reverso: espalda de la prenda + ficha -->
+        <div class="face face-back">
+          <div class="cromo-frame">
+            <div class="cromo-panel cromo-back relative flex h-full flex-col overflow-hidden rounded-[14px] p-3">
+              <div class="relative min-h-0 flex-1">
+                <Picture src={productImage(stageImage(p))} alt={hasBack ? imageAlt(p, "back") : ""} {...pic} class="garment absolute inset-0 h-full w-full object-contain" loading="lazy" />
+              </div>
+              <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-t border-white/15 pt-2 text-[12px]">
+                {
+                  stats.map(([k, v]) => (
+                    <>
+                      <dt class="broadcast pt-0.5 text-[10px] text-muted">{k}</dt>
+                      <dd class="truncate text-right font-semibold">{v}</dd>
+                    </>
+                  ))
+                }
+              </dl>
+              <div data-foil class="foil" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" data-flip class="press mt-4 inline-flex h-11 items-center gap-2 rounded-full border border-line px-4 text-sm font-semibold">
+      <Icon name="RefreshCw" size={16} />
+      <span data-flip-label>{hasBack ? "Ver espalda" : "Ver ficha"}</span>
+    </button>
+  </div>
+
+  <!-- Datos y pedido -->
+  <div class="px-5 pt-4 pb-8 md:px-2 md:pr-8">
+    {p.team && <p class="broadcast text-muted">{p.team}</p>}
+    <Heading id={`${id}-title`} class="mt-1 text-[clamp(2.5rem,10vw,3.5rem)] font-black uppercase">{p.title}</Heading>
+    <p class="mt-2 text-sm text-muted">{[p.number !== null ? `#${p.number}` : null, p.season ? `Temporada ${p.season}` : null, p.variant].filter(Boolean).join(" · ")}</p>
+    <div class="mt-5">
+      {price ? <p class="font-display text-4xl leading-none font-extrabold">{price}</p> : <p class="font-semibold text-muted">Precio por WhatsApp</p>}
+    </div>
+
+    {
+      p.soldOut ? (
+        <div class="mt-6 rounded-2xl border border-line p-4">
+          <p class="font-semibold">Agotado por ahora.</p>
+          <p class="mt-1 text-sm text-muted">Pregúntanos por otra talla o un equipo parecido.</p>
+          <a {...waAttrs(generalWhatsAppUrl(store))} class="press mt-3 inline-flex h-11 items-center gap-2 rounded-full border border-line px-4 text-sm font-semibold">
+            <WhatsAppIcon size={18} />
+            Preguntar por WhatsApp
+          </a>
+        </div>
+      ) : (
+        <>
+          {p.sizes.length > 0 && (
+            <fieldset class="mt-6">
+              <legend id={`${id}-sizes`} class="text-sm font-semibold">
+                Elige tu talla
+              </legend>
+              <div data-sizes role="radiogroup" aria-labelledby={`${id}-sizes`} class="mt-3 flex flex-wrap gap-2 rounded-2xl outline-2 outline-offset-4 outline-transparent transition-[outline-color] duration-300">
+                {p.sizes.map((s, i) => (
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked="false"
+                    tabindex={i === 0 ? 0 : -1}
+                    data-size={s}
+                    data-wa={productWhatsAppUrl(store, p, s) ?? "#"}
+                    class="press h-12 min-w-12 rounded-xl border border-line px-3 text-sm font-bold transition-[background-color,color,border-color] duration-150 aria-checked:border-(--accent) aria-checked:bg-(--accent) aria-checked:text-bg"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+              <p data-size-msg aria-live="polite" class="mt-2 min-h-5 text-sm font-semibold text-live"></p>
+            </fieldset>
+          )}
+          <a {...waAttrs(productWhatsAppUrl(store, p, null))} data-order data-needs-size={p.sizes.length > 0 ? "" : undefined} class="press mt-6 flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-wa text-base font-extrabold text-on-wa">
+            <WhatsAppIcon size={22} />
+            Pedir por WhatsApp
+          </a>
+        </>
+      )
+    }
+    <button type="button" data-share data-url={`${store.siteUrl}/p/${p.slug}`} data-title={`${productLabel(p)} | HOOPZ`} class="press mt-3 flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-line text-sm font-semibold">
+      <Icon name="Share2" size={18} />
+      Compartir
+    </button>
+    <p class="mt-5 text-[13px] leading-relaxed text-muted">Te respondemos por WhatsApp para coordinar pago y entrega.{store.shipping && ` ${store.shipping}.`}</p>
+  </div>
+</article>
+
+<style>
+  .cromo-tilt {
+    perspective: 1100px;
+  }
+  .cromo {
+    transform-style: preserve-3d;
+    transform: rotateY(var(--ry, 0deg));
+  }
+  .cromo[data-side="back"] {
+    --ry: 180deg;
+  }
+  .face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .face-back {
+    transform: rotateY(180deg);
+  }
+  .cromo-frame {
+    height: 100%;
+    padding: 7px;
+    border-radius: 20px;
+    background: linear-gradient(150deg, var(--accent), color-mix(in oklch, var(--accent) 25%, #111) 45%, color-mix(in oklch, var(--accent) 70%, #fff) 70%, var(--accent));
+    box-shadow:
+      0 30px 60px -20px rgb(0 0 0 / 0.8),
+      0 0 0 1px rgb(255 255 255 / 0.08);
+  }
+  .cromo-panel {
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 30%, color-mix(in oklch, var(--accent) 38%, transparent), transparent 75%),
+      linear-gradient(170deg, #1a1a20, #09090b);
+  }
+  .cromo-back {
+    background: linear-gradient(170deg, #17171c, #09090b);
+  }
+  .cromo-num {
+    position: absolute;
+    right: -4%;
+    top: 4%;
+    font-size: calc(560px / var(--len));
+    opacity: 0.45;
+  }
+  /* Brillo holográfico: se mueve con la inclinación (--mx/--my los pone el JS) */
+  .foil {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: color-dodge;
+    opacity: 0.28;
+    background: linear-gradient(115deg, transparent 18%, hsl(190 95% 60% / 0.55) 32%, hsl(300 90% 65% / 0.5) 44%, hsl(50 95% 60% / 0.5) 56%, hsl(140 85% 55% / 0.45) 66%, transparent 80%);
+    background-size: 260% 260%;
+    background-position: var(--mx, 30%) var(--my, 30%);
+  }
+  .glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    background: radial-gradient(circle at var(--gx, 30%) var(--gy, 20%), rgb(255 255 255 / 0.35), transparent 45%);
+  }
+</style>

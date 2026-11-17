@@ -1,0 +1,30 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Intro from "@/components/Intro.astro";
+import Header from "@/components/Header.astro";
+import Lineup from "@/components/Lineup.astro";
+import Ticker from "@/components/Ticker.astro";
+import Vestuario from "@/components/Vestuario.astro";
+import Jugada from "@/components/Jugada.astro";
+import Cierre from "@/components/Cierre.astro";
+import WhatsAppFab from "@/components/WhatsAppFab.astro";
+import ProductSheet from "@/components/ProductSheet.astro";
+---
+
+<BaseLayout
+  title="HOOPZ | Jerseys NBA actuales y leyendas en Aragua"
+  description="Jerseys NBA actuales y leyendas, chaquetas y ropa de entrenamiento. Eliges aquí y pides por WhatsApp desde Aragua, Venezuela."
+  intro
+>
+  <Intro />
+  <Header />
+  <main>
+    <Lineup />
+    <Ticker />
+    <Vestuario />
+    <Jugada />
+  </main>
+  <Cierre />
+  <WhatsAppFab />
+  <ProductSheet />
+</BaseLayout>

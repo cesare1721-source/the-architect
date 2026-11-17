@@ -1,0 +1,64 @@
+---
+import { Image, getImage } from "astro:assets";
+import emblem from "@/assets/brand/hoopz-emblem.png";
+import emblemMask from "@/assets/brand/hoopz-emblem-mask.png";
+const mask = await getImage({ src: emblemMask, width: 560, format: "webp" });
+---
+
+<!-- Salto inicial: dos reflectores se cruzan sobre el logo y la arena se abre como dos puertas -->
+<div data-intro class="intro fixed inset-0 z-(--z-intro)" aria-hidden="true">
+  <div data-door="top" class="absolute inset-x-0 top-0 h-[50.5%] bg-bg"></div>
+  <div data-door="bottom" class="absolute inset-x-0 bottom-0 h-[50.5%] bg-bg"></div>
+  <div data-cone="left" class="cone cone-left"></div>
+  <div data-cone="right" class="cone cone-right"></div>
+  <div class="absolute inset-0 grid place-items-center">
+    <div data-intro-logo class="relative w-[min(280px,64vw)]">
+      <Image src={emblem} alt="" width={560} class="logo-fade h-auto w-full" loading="eager" />
+      <div class="sweep" data-sweep style={`--logo-mask:url(${mask.src})`}></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .intro {
+    display: none;
+  }
+  :global(html.intro-pending) .intro {
+    display: block;
+    /* red de seguridad: si el JS no llega, la intro desaparece sola */
+    animation: intro-failsafe 0s linear 3.5s forwards;
+  }
+  :global(html.intro-pending) [data-intro-logo] {
+    opacity: 0;
+    animation: intro-logo 0.4s ease-out 1.4s forwards;
+  }
+  @keyframes intro-logo {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes intro-failsafe {
+    to {
+      visibility: hidden;
+    }
+  }
+  .cone {
+    position: absolute;
+    top: -12%;
+    width: 70vmax;
+    height: 130vh;
+    transform-origin: 50% 0;
+    opacity: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0.06) 55%, transparent 85%);
+    clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%);
+    filter: blur(10px);
+    mix-blend-mode: screen;
+  }
+  .cone-left {
+    left: -35vmax;
+  }
+  .cone-right {
+    right: -35vmax;
+  }
+</style>

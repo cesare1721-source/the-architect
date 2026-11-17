@@ -1,0 +1,80 @@
+---
+// "Cómo pedir" dibujado como una jugada de pizarra: pase, corte y canasta.
+const steps = [
+  { n: "1", t: "Elige tu pieza y tu talla.", d: "Toca cualquier casillero del vestuario." },
+  { n: "2", t: "Escríbenos por WhatsApp.", d: "El mensaje con tu pedido ya va listo, solo dale enviar." },
+  { n: "3", t: "Coordinamos pago y entrega.", d: "Te confirmamos disponibilidad y cómo te llega." },
+];
+---
+
+<section id="la-jugada" data-play class="board relative isolate overflow-hidden border-y border-line">
+  <div class="mx-auto grid max-w-7xl gap-8 px-4 py-20 md:grid-cols-2 md:items-center md:px-6 xl:px-8">
+    <div>
+      <p class="broadcast text-muted">Cómo pedir</p>
+      <h2 data-split data-split-words class="mt-2 text-[clamp(3rem,13vw,5.5rem)] font-black uppercase">La jugada</h2>
+      <p class="mt-3 max-w-[34ch] text-muted">Tres pases y es canasta.</p>
+    </div>
+
+    <svg data-play-svg class="chalk w-full max-w-[520px] justify-self-center" viewBox="0 0 360 300" fill="none" aria-hidden="true">
+      <defs>
+        <filter id="tiza" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" seed="4" />
+          <feDisplacementMap in="SourceGraphic" scale="2.2" />
+        </filter>
+        <marker id="flecha" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0 0 10 5 0 10Z" fill="#ecebe4" />
+        </marker>
+      </defs>
+      <g filter="url(#tiza)" stroke="#ecebe4" stroke-linecap="round">
+        <g opacity=".28" stroke-width="1.5">
+          <path d="M10 290H350" />
+          <path d="M120 290V180H240V290" />
+          <path d="M140 180A40 40 0 0 1 220 180" />
+          <path d="M30 290V230A170 170 0 0 1 330 230V290" />
+          <path d="M165 268H195" />
+          <circle cx="180" cy="258" r="7" />
+        </g>
+        <path data-pass d="M88 78C150 52 238 70 280 128" stroke-width="2.5" stroke-dasharray="7 7" marker-end="url(#flecha)" />
+        <path data-pass d="M290 154C276 206 232 236 196 250" stroke-width="2.5" marker-end="url(#flecha)" />
+        <g data-mark stroke-width="2.5">
+          <circle cx="70" cy="70" r="15" />
+          <text x="70" y="77" fill="#ecebe4" stroke="none" text-anchor="middle" font-size="20" font-family="var(--font-display)" font-weight="900">1</text>
+        </g>
+        <g data-mark stroke-width="2.5">
+          <circle cx="292" cy="138" r="15" />
+          <text x="292" y="145" fill="#ecebe4" stroke="none" text-anchor="middle" font-size="20" font-family="var(--font-display)" font-weight="900">2</text>
+        </g>
+        <g data-mark stroke-width="2.5">
+          <path d="M168 246l24 24M192 246l-24 24" />
+          <text x="214" y="252" fill="#ecebe4" stroke="none" font-size="20" font-family="var(--font-display)" font-weight="900">3</text>
+        </g>
+      </g>
+    </svg>
+
+    <ol class="grid gap-6 md:col-span-2 md:grid-cols-3">
+      {
+        steps.map((s) => (
+          <li data-step class="step flex gap-4 rounded-2xl border border-white/10 p-4">
+            <span class="font-display grid size-11 shrink-0 place-items-center rounded-full border-2 border-tape text-xl font-black text-tape">{s.n}</span>
+            <div>
+              <h3 class="font-sans text-lg font-bold">{s.t}</h3>
+              <p class="mt-1 text-muted">{s.d}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .board {
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 40%, rgb(70 90 75 / 0.18), transparent 70%),
+      linear-gradient(180deg, #0d100e, #0a0b0a);
+  }
+  .step.is-on {
+    border-color: rgb(236 235 228 / 0.45);
+    background: rgb(236 235 228 / 0.04);
+  }
+</style>

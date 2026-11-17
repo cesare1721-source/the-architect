@@ -1,0 +1,52 @@
+---
+import { countsByCategory, getStore } from "@/lib/catalog";
+
+const store = getStore();
+const c = countsByCategory();
+const items = [
+  `${c.todo} piezas en el vestuario`,
+  "Pedidos por WhatsApp",
+  `${c.actuales} jerseys actuales`,
+  `${c.retro} leyendas`,
+  `${c.chaquetas} chaquetas`,
+  `${c.entrenamiento} de entrenamiento`,
+  store.location,
+  store.shipping,
+].filter((x): x is string => Boolean(x));
+---
+
+<!-- Cinta de transmisión: etiqueta fija "EN VIVO" + texto que corre -->
+<div class="relative flex h-12 items-stretch overflow-hidden border-y border-line bg-surface" role="region" aria-label={items.join(". ")}>
+  <p class="broadcast relative z-10 flex shrink-0 items-center gap-2 bg-live px-4 text-white">
+    <span class="live-dot size-2 rounded-full bg-white"></span> En vivo
+  </p>
+  <div class="relative flex-1 overflow-hidden" aria-hidden="true">
+    <div data-ticker class="flex h-full w-max items-center">
+      {
+        [0, 1].map(() => (
+          <div class="flex shrink-0 items-center">
+            {items.map((t) => (
+              <span class="font-display flex items-center text-[22px] leading-none font-extrabold whitespace-nowrap uppercase">
+                <span class="px-5">{t}</span>
+                <span class="h-4 w-px rotate-12 bg-faint" />
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .live-dot {
+      animation: live 1.6s ease-in-out infinite;
+    }
+  }
+  @keyframes live {
+    50% {
+      opacity: 0.25;
+    }
+  }
+</style>

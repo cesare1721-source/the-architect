@@ -1,0 +1,73 @@
+---
+import "@/styles/global.css";
+import fontUrl from "@fontsource-variable/big-shoulders-display/files/big-shoulders-display-latin-wght-normal.woff2?url";
+import { getStore } from "@/lib/catalog";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  path?: string;
+  /** solo el inicio muestra la intro */
+  intro?: boolean;
+}
+const { title, description, ogImage = "/og/default.jpg", path = "/", intro = false } = Astro.props;
+const store = getStore();
+const canonical = new URL(path, store.siteUrl).href;
+const ogUrl = new URL(ogImage, store.siteUrl).href;
+---
+
+<!doctype html>
+<html lang="es-VE">
+  <head>
+    <meta charset="utf-8" />
+    {
+      intro ? (
+        <script is:inline>
+          (function () {
+            var d = document.documentElement;
+            d.classList.add("js");
+            try {
+              if (!sessionStorage.getItem("hoopz-intro") && !matchMedia("(prefers-reduced-motion: reduce)").matches) d.classList.add("intro-pending");
+            } catch (e) {}
+          })();
+        </script>
+      ) : (
+        <script is:inline>document.documentElement.classList.add("js");</script>
+      )
+    }
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#08080A" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="HOOPZ" />
+    <meta property="og:locale" content="es_VE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogUrl} />
+  </head>
+  <body class="bg-bg text-ink antialiased">
+    <slot />
+    <div id="toast" role="status" aria-live="polite" class="pointer-events-none fixed inset-x-0 bottom-24 z-(--z-toast) flex justify-center px-4">
+      <p class="toast-msg translate-y-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-bg opacity-0 transition duration-200"></p>
+    </div>
+    <script>
+      import "@/scripts/main";
+    </script>
+    {
+      store.cfAnalyticsToken && (
+        <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: store.cfAnalyticsToken })} />
+      )
+    }
+  </body>
+</html>

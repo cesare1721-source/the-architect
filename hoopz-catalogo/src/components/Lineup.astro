@@ -1,0 +1,227 @@
+---
+import { Picture } from "astro:assets";
+import Icon from "./icons/Icon.astro";
+import { getStore, lineup } from "@/lib/catalog";
+import { productImage } from "@/lib/images";
+import { imageAlt, priceText, stageImage, teamShort } from "@/lib/labels";
+import { generalWhatsAppUrl } from "@/lib/whatsapp";
+import { waAttrs } from "@/lib/wa-attrs";
+
+const players = lineup();
+const wa = waAttrs(generalWhatsAppUrl(getStore()));
+const pad = (n: number) => String(n).padStart(2, "0");
+// abanico de la portada: el titular 1 al centro
+const fanOrder = [3, 1, 0, 2, 4].map((i) => players[i]!);
+const fanPose = [
+  { x: -78, r: -14, s: 0.8 },
+  { x: -40, r: -7, s: 0.9 },
+  { x: 0, r: 0, s: 1 },
+  { x: 40, r: 7, s: 0.9 },
+  { x: 78, r: 14, s: 0.8 },
+];
+---
+
+<section id="inicio" data-lineup class="relative isolate" aria-label="Alineación titular">
+  <!-- Portada -->
+  <div data-cover class="relative isolate flex min-h-svh flex-col overflow-hidden pt-(--header-h)">
+    <div class="cover-light absolute inset-0 -z-10" aria-hidden="true"></div>
+    <div class="mx-auto w-full max-w-7xl px-4 pt-10 md:px-6 md:pt-16 xl:px-8">
+      <p data-cover-fade class="broadcast flex items-center gap-2 text-muted">
+        <span class="size-2 rounded-full bg-live"></span> Aragua, Venezuela · Jerseys NBA
+      </p>
+      <h1 data-split data-cover-title class="mt-3 text-[clamp(4rem,19vw,8.5rem)] font-black tracking-[-0.01em] uppercase">
+        Viste<br />el juego
+      </h1>
+      <p data-cover-fade class="mt-4 max-w-[32ch] text-base text-muted md:text-lg">
+        Actuales y leyendas, chaquetas y ropa de entrenamiento. Eliges aquí, pides por WhatsApp.
+      </p>
+      <div data-cover-fade class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+        <a href="#vestuario" data-scroll-to class="press inline-flex h-12 items-center gap-2 rounded-full bg-ink px-6 font-extrabold text-bg">
+          Ver la tienda
+          <Icon name="ArrowDown" size={18} />
+        </a>
+        <a {...wa} class="inline-flex h-12 items-center font-semibold underline decoration-line decoration-2 underline-offset-8 transition-colors hover:decoration-ink">
+          Escríbenos
+        </a>
+      </div>
+    </div>
+
+    <!-- Abanico con los 5 titulares -->
+    <div data-fan class="relative mx-auto mt-auto h-[min(46svh,460px)] w-full max-w-3xl" aria-hidden="true">
+      {
+        fanOrder.map((p, i) => {
+          const pose = fanPose[i]!;
+          return (
+            <div
+              data-fan-item
+              class="absolute bottom-[-2%] left-1/2 h-full w-[46%] max-w-[300px] origin-bottom"
+              style={`--x:${pose.x}%;--r:${pose.r}deg;--s:${pose.s};z-index:${i === 2 ? 5 : 4 - Math.abs(i - 2)};transform:translateX(calc(-50% + var(--x))) rotate(var(--r)) scale(var(--s))`}
+            >
+              <Picture
+                src={productImage(stageImage(p))}
+                alt=""
+                formats={["avif", "webp"]}
+                fallbackFormat="webp"
+                widths={[320, 480, 640]}
+                sizes="(min-width: 768px) 300px, 46vw"
+                class="garment h-full w-full object-contain object-bottom"
+                loading="eager"
+                fetchpriority={i === 2 ? "high" : "auto"}
+              />
+            </div>
+          );
+        })
+      }
+    </div>
+    <p data-cover-fade class="broadcast pointer-events-none absolute inset-x-0 bottom-5 z-10 flex items-center justify-center gap-2 text-ink">
+      La alineación titular <Icon name="ArrowDown" size={14} />
+    </p>
+  </div>
+
+  <!-- Escena: presentación de los 5 titulares -->
+  <div data-stage class="stage relative">
+    <div data-bug class="bug pointer-events-none z-20 hidden">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 md:px-6 xl:px-8">
+        <p class="broadcast flex items-center gap-2">
+          <span class="size-2 rounded-full bg-live"></span>
+          Alineación titular
+          <span class="text-muted"><span data-bug-count>01</span> / {pad(players.length)}</span>
+        </p>
+        <a href="#vestuario" data-scroll-to class="broadcast pointer-events-auto flex h-11 items-center gap-1 text-muted hover:text-ink">
+          Saltar <Icon name="ChevronRight" size={14} />
+        </a>
+      </div>
+      <div class="mx-auto mt-2 flex max-w-7xl gap-1.5 px-4 md:px-6 xl:px-8">
+        {players.map(() => <span data-bug-seg class="h-0.5 flex-1 rounded-full bg-ink/20"><span class="block h-full w-full origin-left scale-x-0 rounded-full bg-ink" /></span>)}
+      </div>
+    </div>
+
+    {
+      players.map((p, i) => {
+        const price = priceText(p);
+        const [first, ...rest] = p.title.split(" ");
+        return (
+          <article data-player data-accent={p.accent} class="player relative isolate overflow-hidden" style={`--accent:${p.accent};z-index:${i + 1}`}>
+            <div data-wash class="wash absolute inset-0 -z-10" />
+            <span data-num class="outline-text player-num absolute -z-10" aria-hidden="true">
+              {p.number}
+            </span>
+            <figure data-jersey class="player-jersey absolute">
+              <Picture
+                src={productImage(stageImage(p))}
+                alt={imageAlt(p, p.images.back ? "back" : "front")}
+                formats={["avif", "webp"]}
+                fallbackFormat="webp"
+                widths={[480, 720, 960]}
+                sizes="(min-width: 1024px) 40vw, 86vw"
+                class="garment h-full w-full object-contain"
+                loading="lazy"
+              />
+            </figure>
+            <div data-lower class="lower-third absolute inset-x-0 bottom-0">
+              <div class="mx-auto max-w-7xl px-4 pb-6 md:px-6 md:pb-10 xl:px-8">
+                <p class="broadcast text-(--accent)">
+                  {pad(i + 1)} · {teamShort(p)}
+                  {p.category === "retro" ? " · Leyenda" : ""}
+                  {p.season ? ` · ${p.season}` : ""}
+                </p>
+                <h2 data-split data-name class="mt-1 uppercase">
+                  <span class="block text-[clamp(1.5rem,6vw,2.5rem)] font-extrabold">{first}</span>
+                  <span class="block text-[clamp(3.5rem,17vw,7rem)] font-black">{rest.join(" ")}</span>
+                </h2>
+                <div data-bar class="mt-4 flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-bg/70 p-2 pl-4 backdrop-blur-md">
+                  <p class="min-w-0 truncate text-sm">
+                    <span class="font-semibold">#{p.number}</span>
+                    <span class="text-muted"> · {p.variant}</span>
+                    {price && <span class="font-display ml-2 text-xl font-extrabold">{price}</span>}
+                  </p>
+                  <a href={`/p/${p.slug}`} data-open-sheet={p.slug} class="press inline-flex h-11 shrink-0 items-center gap-1 rounded-xl bg-ink px-4 text-sm font-extrabold text-bg">
+                    Ver jersey <Icon name="ChevronRight" size={16} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+</section>
+
+<style>
+  .cover-light {
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 100%, rgb(255 255 255 / 0.09), transparent 70%),
+      radial-gradient(ellipse 30% 80% at 18% -10%, rgb(255 255 255 / 0.07), transparent 70%),
+      radial-gradient(ellipse 30% 80% at 82% -10%, rgb(255 255 255 / 0.07), transparent 70%);
+  }
+  /* Sin motion: fichas apiladas, legibles */
+  .player {
+    min-height: 92svh;
+  }
+  .wash {
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 38%, color-mix(in oklch, var(--accent) 45%, transparent), transparent 75%),
+      linear-gradient(160deg, color-mix(in oklch, var(--accent) 30%, var(--color-bg)) 0%, var(--color-bg) 70%);
+  }
+  .player-num {
+    left: 50%;
+    top: 34%;
+    translate: -50% -50%;
+    font-size: clamp(14rem, 78vw, 34rem);
+    opacity: 0.55;
+  }
+  .player-jersey {
+    left: 50%;
+    top: calc(var(--header-h) + 3.5rem);
+    width: min(86vw, 520px);
+    height: 50svh;
+    translate: -50% 0;
+  }
+  .lower-third {
+    background: linear-gradient(to top, var(--color-bg) 18%, transparent);
+    padding-top: 6rem;
+  }
+  @media (min-width: 1024px) {
+    .player-num {
+      left: 68%;
+      top: 50%;
+    }
+    .player-jersey {
+      left: auto;
+      right: 6%;
+      top: calc(var(--header-h) + 2rem);
+      width: 40vw;
+      height: calc(100svh - var(--header-h) - 4rem);
+      translate: none;
+    }
+    .lower-third {
+      background: linear-gradient(to right, var(--color-bg) 25%, transparent 70%);
+      top: 0;
+      display: flex;
+      align-items: flex-end;
+    }
+    .lower-third > div {
+      width: 100%;
+    }
+    .lower-third [data-bar] {
+      max-width: 34rem;
+    }
+  }
+  /* Con motion (lo activa el JS): escena fija a pantalla completa */
+  .stage.is-pinned {
+    height: 100svh;
+    overflow: hidden;
+  }
+  .stage.is-pinned .player {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+  }
+  .stage.is-pinned .bug {
+    display: block;
+    position: absolute;
+    inset-inline: 0;
+    top: calc(var(--header-h) + 0.75rem);
+  }
+</style>

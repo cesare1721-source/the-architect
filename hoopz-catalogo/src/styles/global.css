@@ -1,0 +1,175 @@
+@import "tailwindcss";
+@import "@fontsource-variable/big-shoulders-display";
+@import "@fontsource-variable/manrope";
+
+/* ───────────────────────────────────────────────────────────
+   HOOPZ · Noche de juego
+   Arena oscura; el color lo ponen las prendas (--accent).
+   ─────────────────────────────────────────────────────────── */
+@theme {
+  --color-bg: #08080a;
+  --color-surface: #121215;
+  --color-surface-2: #1b1b20;
+  --color-line: #26262c;
+  --color-ink: #f2f2f2;
+  --color-muted: #a3a3ad;
+  --color-faint: #5c5c66; /* solo decoración, nunca texto */
+  --color-silver: #c8c8cc;
+  --color-tape: #ecebe4; /* cinta de las placas del vestuario */
+  --color-gold: #e8c46a;
+  --color-live: #ff3b47; /* solo el punto "EN VIVO" y errores */
+  --color-wa: #25d366;
+  --color-on-wa: #08080a;
+
+  --font-display: "Big Shoulders Display Variable", "Arial Narrow", sans-serif;
+  --font-sans: "Manrope Variable", system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:root {
+  --accent: var(--color-silver);
+  --header-h: 56px;
+  --z-sticky: 10;
+  --z-header: 20;
+  --z-fab: 30;
+  --z-sheet: 40;
+  --z-toast: 50;
+  --z-intro: 60;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+  body {
+    min-height: 100svh;
+    overflow-x: clip;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+}
+
+/* ── Utilidades de marca ─────────────────────────────────── */
+@utility press {
+  transition: transform 160ms var(--ease-out);
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* Etiqueta de transmisión: la única voz en mayúsculas espaciadas (rótulos de TV) */
+@utility broadcast {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Logo: el PNG tiene fondo casi negro; se difuminan los bordes */
+.logo-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-composite: intersect;
+}
+
+/* Barrido de luz recortado a la forma del logo (GSAP mueve background-position) */
+.sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 40%, rgb(255 255 255 / 0.6) 50%, transparent 60%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-mask: var(--logo-mask) center / 100% 100% no-repeat;
+  mask: var(--logo-mask) center / 100% 100% no-repeat;
+}
+
+/* Número/texto gigante contorneado */
+.outline-text {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--accent);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+.garment {
+  filter: drop-shadow(0 28px 26px rgb(0 0 0 / 0.65));
+}
+
+/* Grano global (estático) */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-toast);
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Máscaras de SplitText: espacio arriba para no recortar tildes */
+[data-split] > div {
+  padding-top: 0.18em;
+  margin-top: -0.18em;
+}
+
+/* ── Estados controlados por JS ──────────────────────────── */
+html.header-hidden [data-filterbar] {
+  top: 0;
+}
+html.sheet-open {
+  overflow: hidden;
+}
+html.sheet-open [data-fab] {
+  visibility: hidden !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

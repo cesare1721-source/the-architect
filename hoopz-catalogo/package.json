@@ -1,0 +1,40 @@
+{
+  "name": "hoopz-catalogo",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "tsx scripts/check-data.ts && tsx scripts/make-og.ts && astro build",
+    "preview": "node scripts/serve-static.mjs dist 4321",
+    "check": "astro check",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "images": "python3 scripts/process-images.py",
+    "check:data": "tsx scripts/check-data.ts",
+    "deploy": "tsx scripts/check-data.ts --strict && pnpm build && wrangler pages deploy dist --project-name hoopz"
+  },
+  "dependencies": {
+    "@fontsource-variable/big-shoulders-display": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.12",
+    "gsap": "^3.15.1",
+    "lenis": "^1.3.27",
+    "lucide-static": "^1.73.0",
+    "tailwindcss": "^4.3.5",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@playwright/test": "~1.56.1",
+    "@types/node": "^22.20.5",
+    "sharp": "^0.35.5",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3",
+    "vitest": "^5.1.0"
+  }
+}

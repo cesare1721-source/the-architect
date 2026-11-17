@@ -1,0 +1,62 @@
+---
+import { Image, getImage } from "astro:assets";
+import emblem from "@/assets/brand/hoopz-emblem.png";
+import emblemMask from "@/assets/brand/hoopz-emblem-mask.png";
+import Icon from "./icons/Icon.astro";
+import InstagramIcon from "./icons/InstagramIcon.astro";
+import WhatsAppIcon from "./icons/WhatsAppIcon.astro";
+import { getStore } from "@/lib/catalog";
+import { generalWhatsAppUrl } from "@/lib/whatsapp";
+import { waAttrs } from "@/lib/wa-attrs";
+
+const store = getStore();
+const wa = waAttrs(generalWhatsAppUrl(store));
+const mask = await getImage({ src: emblemMask, width: 480, format: "webp" });
+---
+
+<footer class="relative isolate overflow-hidden">
+  <div class="closer-light absolute inset-0 -z-10" aria-hidden="true"></div>
+  <div class="mx-auto max-w-7xl px-4 pt-24 pb-28 text-center md:px-6 xl:px-8">
+    <h2 data-split data-split-words class="text-[clamp(2.75rem,12vw,5.5rem)] font-black uppercase">¿Falta tu equipo?</h2>
+    <p class="mx-auto mt-4 max-w-[38ch] text-muted">Escríbenos y te decimos qué tenemos disponible.</p>
+    <a {...wa} class="press mt-8 inline-flex h-14 items-center gap-2 rounded-2xl bg-wa px-7 font-extrabold text-on-wa">
+      <WhatsAppIcon size={22} />
+      Escribir por WhatsApp
+    </a>
+
+    <div data-logo-sweep class="relative mx-auto mt-20 w-[min(240px,62vw)]">
+      <Image src={emblem} alt="HOOPZ" width={480} class="logo-fade h-auto w-full" />
+      <div class="sweep" data-sweep style={`--logo-mask:url(${mask.src})`}></div>
+    </div>
+
+    <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-muted">
+      <li class="flex items-center gap-2"><Icon name="MapPin" size={16} />{store.location}</li>
+      {
+        store.shipping && (
+          <li class="flex items-center gap-2">
+            <Icon name="Truck" size={16} />
+            {store.shipping}
+          </li>
+        )
+      }
+      {
+        store.instagram && (
+          <li>
+            <a href={`https://instagram.com/${store.instagram}`} target="_blank" rel="noopener" class="flex h-11 items-center gap-2 hover:text-ink">
+              <InstagramIcon size={16} />@{store.instagram}
+            </a>
+          </li>
+        )
+      }
+    </ul>
+    <p class="mt-6 text-xs text-muted">© {new Date().getFullYear()} HOOPZ</p>
+  </div>
+</footer>
+
+<style>
+  .closer-light {
+    background:
+      radial-gradient(ellipse 40% 50% at 50% -5%, rgb(255 255 255 / 0.1), transparent 70%),
+      radial-gradient(ellipse 60% 35% at 50% 100%, rgb(255 255 255 / 0.05), transparent 70%);
+  }
+</style>

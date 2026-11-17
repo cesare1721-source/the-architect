@@ -1,0 +1,13 @@
+---
+import WhatsAppIcon from "./icons/WhatsAppIcon.astro";
+import { getStore } from "@/lib/catalog";
+import { generalWhatsAppUrl } from "@/lib/whatsapp";
+import { waAttrs } from "@/lib/wa-attrs";
+
+const wa = waAttrs(generalWhatsAppUrl(getStore()));
+---
+
+<a {...wa} data-fab aria-label="Pedir por WhatsApp" class="press fixed right-4 bottom-[max(16px,env(safe-area-inset-bottom))] z-(--z-fab) grid size-14 place-items-center rounded-full bg-wa text-on-wa shadow-[0_10px_30px_rgb(0_0_0/.5)]">
+  <span data-fab-ring class="absolute inset-0 rounded-full border-2 border-wa opacity-0"></span>
+  <WhatsAppIcon size={28} />
+</a>

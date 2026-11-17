@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+import wordmark from "@/assets/brand/hoopz-wordmark.png";
+import WhatsAppIcon from "./icons/WhatsAppIcon.astro";
+import { getStore } from "@/lib/catalog";
+import { generalWhatsAppUrl } from "@/lib/whatsapp";
+import { waAttrs } from "@/lib/wa-attrs";
+
+const wa = waAttrs(generalWhatsAppUrl(getStore()));
+---
+
+<header data-header class="fixed inset-x-0 top-0 z-(--z-header) h-(--header-h) border-b border-line/50 bg-bg/70 backdrop-blur-md">
+  <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-4 md:px-6 xl:px-8">
+    <a href="/" aria-label="HOOPZ, ir al inicio" class="-ml-1 flex h-11 items-center px-1">
+      <Image src={wordmark} alt="" width={160} class="logo-fade h-7 w-auto" loading="eager" />
+    </a>
+    <a {...wa} class="press flex h-11 items-center gap-2 rounded-full bg-wa px-4 text-sm font-extrabold text-on-wa">
+      <WhatsAppIcon size={18} />
+      Pedir
+    </a>
+  </div>
+</header>

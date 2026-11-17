@@ -1,0 +1,19 @@
+---
+import FilterBar from "./FilterBar.astro";
+import LockerCard from "./LockerCard.astro";
+import { getProducts } from "@/lib/catalog";
+
+const products = getProducts();
+---
+
+<section id="vestuario" class="mx-auto max-w-7xl scroll-mt-(--header-h) px-4 pt-20 pb-24 md:px-6 xl:px-8">
+  <div class="flex items-end justify-between gap-4 pb-1">
+    <h2 data-split data-split-words class="text-[clamp(3rem,13vw,5.5rem)] font-black uppercase">El vestuario</h2>
+    <p class="pb-2 text-sm font-semibold whitespace-nowrap text-muted"><span data-count class="tabular-nums">{products.length}</span> piezas</p>
+  </div>
+  <p class="max-w-[38ch] text-muted">Cada casillero, una pieza. Toca la que te guste para verla de cerca.</p>
+  <FilterBar />
+  <ul data-grid class="mt-5 grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 md:gap-x-5 xl:grid-cols-4">
+    {products.map((p, i) => <LockerCard product={p} eager={i < 2} />)}
+  </ul>
+</section>

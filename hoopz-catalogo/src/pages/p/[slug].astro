@@ -1,0 +1,40 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Header from "@/components/Header.astro";
+import Cromo from "@/components/Cromo.astro";
+import LockerCard from "@/components/LockerCard.astro";
+import Cierre from "@/components/Cierre.astro";
+import WhatsAppFab from "@/components/WhatsAppFab.astro";
+import Icon from "@/components/icons/Icon.astro";
+import type { Product } from "@/data/schema";
+import { getProducts, related } from "@/lib/catalog";
+import { priceText } from "@/lib/labels";
+import { productLabel } from "@/lib/whatsapp";
+
+export const getStaticPaths = (() => getProducts().map((p) => ({ params: { slug: p.slug }, props: { product: p } }))) satisfies GetStaticPaths;
+
+const { product: p } = Astro.props as { product: Product };
+const description = `${p.variant} · ${priceText(p) ?? "Precio por WhatsApp"} · Pide por WhatsApp`;
+---
+
+<BaseLayout title={`${productLabel(p)} | HOOPZ`} description={description} ogImage={`/og/${p.slug}.jpg`} path={`/p/${p.slug}`}>
+  <Header />
+  <main class="mx-auto max-w-5xl px-4 pt-(--header-h) md:px-6">
+    <a href="/#vestuario" class="mt-4 inline-flex h-11 items-center gap-2 text-sm font-semibold text-muted hover:text-ink">
+      <Icon name="ArrowLeft" size={18} />
+      Volver al vestuario
+    </a>
+    <div class="mt-2 overflow-hidden rounded-3xl border border-line bg-surface">
+      <Cromo product={p} mode="page" />
+    </div>
+    <section class="pt-20 pb-24">
+      <h2 class="text-[clamp(2.25rem,9vw,3.5rem)] font-black uppercase">También en el vestuario</h2>
+      <ul class="mt-8 grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-4 md:gap-x-5">
+        {related(p).map((r) => <LockerCard product={r} />)}
+      </ul>
+    </section>
+  </main>
+  <Cierre />
+  <WhatsAppFab />
+</BaseLayout>

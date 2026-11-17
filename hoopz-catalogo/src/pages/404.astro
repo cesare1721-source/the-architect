@@ -1,0 +1,16 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Header from "@/components/Header.astro";
+---
+
+<BaseLayout title="Página no encontrada | HOOPZ" description="Esta página no existe." path="/404">
+  <Header />
+  <main class="relative isolate grid min-h-svh place-items-center overflow-hidden px-4 text-center">
+    <span class="outline-text absolute -z-10 text-[clamp(10rem,60vw,26rem)] opacity-25" aria-hidden="true">404</span>
+    <div>
+      <p class="broadcast text-muted">Falta personal</p>
+      <h1 class="mt-2 text-[clamp(3rem,14vw,6.5rem)] font-black uppercase">Esta jugada no existe</h1>
+      <a href="/" class="press mt-8 inline-flex h-12 items-center rounded-full bg-ink px-6 font-extrabold text-bg">Volver a la cancha</a>
+    </div>
+  </main>
+</BaseLayout>
