@@ -48,15 +48,21 @@ mm.add(
     const cleanups: (void | (() => void))[] = [];
     if (fine) cleanups.push(initSmoothScroll());
     cleanups.push(initHeader(), initTicker());
-    // SplitText necesita las fuentes cargadas para medir bien
-    document.fonts.ready.then(() =>
-      ctx.add(() => {
-        // el botón flotante después de la escena fija: su posición depende del espacio que esta ocupa
-        cleanups.push(initLineup(), initFab(), initHeadings(), initLockers(), initPlay());
-        initFooterSweep();
-        ScrollTrigger.refresh();
-      }),
-    );
+    // SplitText necesita las fuentes cargadas. La escena principal va primero; el resto en
+    // tareas separadas cuando el navegador queda libre (menos bloqueo del hilo principal).
+    const idle = () => new Promise<void>((r) => ("requestIdleCallback" in window ? requestIdleCallback(() => r(), { timeout: 700 }) : setTimeout(r, 60)));
+    document.fonts.ready
+      .then(() => ctx.add(() => cleanups.push(initLineup(), initFab())))
+      .then(idle)
+      .then(() => ctx.add(() => cleanups.push(initLockers(), initHeadings())))
+      .then(idle)
+      .then(() =>
+        ctx.add(() => {
+          cleanups.push(initPlay());
+          initFooterSweep();
+          ScrollTrigger.refresh();
+        }),
+      );
     return () => cleanups.forEach((c) => c?.());
   },
 );

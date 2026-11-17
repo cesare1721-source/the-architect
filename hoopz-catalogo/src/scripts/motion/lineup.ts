@@ -125,12 +125,13 @@ function cover(root: HTMLElement) {
 
   gsap.set(title.chars, { yPercent: 115 });
   gsap.set(fades, { autoAlpha: 0, y: 14 });
-  gsap.set(fromCenter, { yPercent: 35, autoAlpha: 0 });
+  // solo transform (sin opacidad): el jersey central es el LCP y debe pintarse desde el inicio
+  gsap.set(fromCenter, { yPercent: 40 });
 
   const enter = gsap
     .timeline({ paused: true, defaults: { ease: "expo.out" } })
     .to(title.chars, { yPercent: 0, duration: 0.9, stagger: 0.03 }, 0)
-    .to(fromCenter, { yPercent: 0, autoAlpha: 1, duration: 1, stagger: 0.08 }, 0.15)
+    .to(fromCenter, { yPercent: 0, duration: 1.1, stagger: 0.08 }, 0.1)
     .to(fades, { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.08 }, 0.4);
   const start = () => enter.play();
   if (document.documentElement.classList.contains("intro-pending")) document.addEventListener("hoopz:intro-done", start, { once: true });

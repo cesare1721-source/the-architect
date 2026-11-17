@@ -54,7 +54,7 @@ const fanPose = [
           return (
             <div
               data-fan-item
-              class="absolute bottom-[-2%] left-1/2 h-full w-[46%] max-w-[300px] origin-bottom"
+              class="absolute bottom-[-2%] left-1/2 h-full w-[46%] max-w-[300px] origin-bottom lg:max-w-[460px]"
               style={`--x:${pose.x}%;--r:${pose.r}deg;--s:${pose.s};z-index:${i === 2 ? 5 : 4 - Math.abs(i - 2)};transform:translateX(calc(-50% + var(--x))) rotate(var(--r)) scale(var(--s))`}
             >
               <Picture
@@ -63,7 +63,7 @@ const fanPose = [
                 formats={["avif", "webp"]}
                 fallbackFormat="webp"
                 widths={[320, 480, 640]}
-                sizes="(min-width: 768px) 300px, 46vw"
+                sizes="(min-width: 1024px) 460px, (min-width: 768px) 300px, 46vw"
                 class="garment h-full w-full object-contain object-bottom"
                 loading="eager"
                 fetchpriority={i === 2 ? "high" : "auto"}

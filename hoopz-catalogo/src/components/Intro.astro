@@ -9,14 +9,15 @@ const mask = await getImage({ src: emblemMask, width: 560, format: "webp" });
 <div data-intro class="intro fixed inset-0 z-(--z-intro)" aria-hidden="true">
   <div data-door="top" class="absolute inset-x-0 top-0 h-[50.5%] bg-bg"></div>
   <div data-door="bottom" class="absolute inset-x-0 bottom-0 h-[50.5%] bg-bg"></div>
-  <div data-cone="left" class="cone cone-left"></div>
-  <div data-cone="right" class="cone cone-right"></div>
   <div class="absolute inset-0 grid place-items-center">
     <div data-intro-logo class="relative w-[min(280px,64vw)]">
       <Image src={emblem} alt="" width={560} class="logo-fade h-auto w-full" loading="eager" />
       <div class="sweep" data-sweep style={`--logo-mask:url(${mask.src})`}></div>
     </div>
   </div>
+  <!-- los reflectores van encima del logo: su luz lo baña (mix-blend screen) -->
+  <div data-cone="left" class="cone cone-left"></div>
+  <div data-cone="right" class="cone cone-right"></div>
 </div>
 
 <style>

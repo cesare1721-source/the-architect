@@ -133,7 +133,7 @@ const pic: { formats: ("avif" | "webp")[]; fallbackFormat: "webp"; widths: numbe
                   </button>
                 ))}
               </div>
-              <p data-size-msg aria-live="polite" class="mt-2 min-h-5 text-sm font-semibold text-live"></p>
+              <p data-size-msg aria-live="polite" class="mt-2 min-h-5 text-sm font-semibold text-danger"></p>
             </fieldset>
           )}
           <a {...waAttrs(productWhatsAppUrl(store, p, null))} data-order data-needs-size={p.sizes.length > 0 ? "" : undefined} class="press mt-6 flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-wa text-base font-extrabold text-on-wa">

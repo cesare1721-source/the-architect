@@ -17,7 +17,8 @@
   --color-silver: #c8c8cc;
   --color-tape: #ecebe4; /* cinta de las placas del vestuario */
   --color-gold: #e8c46a;
-  --color-live: #ff3b47; /* solo el punto "EN VIVO" y errores */
+  --color-live: #c8102e; /* fondo de "EN VIVO" (5.9:1 con texto blanco) */
+  --color-danger: #ff6b76; /* texto de error sobre fondos oscuros */
   --color-wa: #25d366;
   --color-on-wa: #08080a;
 
